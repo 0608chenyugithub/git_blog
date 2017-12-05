@@ -1,0 +1,51 @@
+{% extends 'base_admin.html' %}
+{% load staticfiles %}
+{% block style %}
+    .row {
+        margin-top:60px;
+    }
+    .row label {
+        text-align: right;
+    }
+{% endblock %}
+{% block right-content %}
+        <div class="col-md-10 right-content" style="text-align:left;">
+			<form action="/api/pythontitle/" method="post" class="form form-horizontal" id="demoform-1">
+                {% csrf_token %}
+					<legend>编辑</legend>
+					<div class="row cl">
+						<label class="form-label col-xs-4 col-sm-3">标题：</label>
+						<div class="formControls col-xs-8 col-sm-9">
+							<input type="text" value="{{ python_subtitle.python_title.title }}" name="title" class="input-text" autocomplete="off" placeholder="标题" style="width: 80%">
+						</div>
+					</div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-3">子标题：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <input type="text" value="{{ python_subtitle.sub_title }}" class="input-text" autocomplete="off" placeholder="子标题" style="width: 80%">
+                        </div>
+					</div>
+                   <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-3">文本域：</label>
+                        <div class="formControls col-xs-8 col-sm-9">
+                            <textarea class="textarea"  rows="" cols=""  name="" style="min-height:400px;width: 80%">{{ python_subtitle.detail }}</textarea>
+                        </div>
+                    </div>
+					<div class="row cl">
+						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+							<input class="btn btn-primary radius" type="submit" value="保存">
+                            <input class="btn btn-primary radius" type="submit" value="取消">
+						</div>
+					</div>
+				</form>
+        </div>
+
+{% endblock %}
+{% block js %}
+<script>
+    $(function(){
+        var height = $('.left-content').height();
+        $('.right-content').css('height',height);
+    })
+</script>
+{% endblock %}

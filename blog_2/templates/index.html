@@ -1,0 +1,157 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="{% static 'css/bootstrap_337.min.css' %}" rel="stylesheet">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="{% static 'js/jquery_211.min.js' %}"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="{% static 'js/bootstrap_337.min.js' %}"></script>
+    <style>
+        .top {
+            margin-bottom: 40px;
+            background-color: #53aeff;
+        }
+        .top h3{
+            display:inline-block;
+            margin: 10px 100px 0  10px;
+        }
+        .top div{
+            display:inline-block;
+            height: 60px;
+            padding: 20px  30px;
+        }
+         .top div a {
+             text-decoration: none;
+              color: white;
+         }
+     </style>
+
+    <title>Title</title>
+</head>
+<body>
+     <div>
+        <div class="col-md-12 top" style="height:60px;text-align:left"><h3><font color="white">陈宇的个人博客</font></h3>
+            <div id="first"><a href="#">Python语言</a></div>
+            <div><a href="#">C语言</a></div>
+            <div><a href="#">C++语言</a></div>
+            <div><a href="#">JAVA语言</a></div>
+            <div><a href="#">C#语言</a></div>
+            <div><a href="#">PHP语言</a></div>
+            <div><a href="#">Javascript语言</a></div>
+            <div><a href="#">HTML语言</a></div>
+        </div>
+        <div class="col-md-2" style="margin-left:20px;border-right:solid 1px gray;text-align:left;">
+                <div>
+{#                <button type="button" class="btn btn-default btn-sm">#}
+                    <span class="glyphicon glyphicon-plus title"></span>
+    {#                </button>#}
+                    <span>Python语言</span>
+                    <table style="display:none;margin-left:40px;">
+                        <tr class="contents">
+                            <td>
+                                <span class="glyphicon glyphicon-plus"></span> 第一章
+                                <table  style="display:none;margin-left:20px;">
+                                    <tr ><td><a href="">Python简介</a></td></tr>
+                                </table>
+                            <td>
+                        </tr>
+                        <tr class="contents">
+                            <td>
+                                <span class="glyphicon glyphicon-plus"></span> 第二章
+                                <table style="display:none;margin-left:20px;">
+                                    <tr ><td><a href="">Python解释器</a></td></tr>
+                                </table>
+                            <td>
+                        </tr>
+                        <tr class="contents">
+                            <td>
+                                <span class="glyphicon glyphicon-plus"></span> 第三章
+                                <table style="display:none;margin-left:20px;">
+                                    <tr ><td><a href="">使用文本编辑器</a></td></tr>
+                                    <tr ><td><a href="">Python代码运行助手</a></td></tr>
+                                    <tr ><td><a href="">输入和输出</a></td></tr>
+                                </table>
+                            <td>
+                        </tr>
+                        <tr class="contents">
+                            <td>
+                                <span class="glyphicon glyphicon-plus"></span> 第四章
+                                <table style="display:none;margin-left:20px;">
+                                    <tr ><td><a href="">数据类型和变量</a></td></tr>
+                                    <tr ><td><a href="">字符串和编码</a></td></tr>
+                                    <tr ><td><a href="">使用list和tuple</a></td></tr>
+                                </table>
+                            <td>
+                        </tr>
+                    </table>
+                </div>
+        </div>
+        <div class="col-md-8" style="text-align:left;">私有变量:实例._类名__变量名
+私有方法:实例._类名__方法名()
+
+（1）_xxx "单下划线 " 开始的成员变量叫做保护变量，意思是只有类实例和子类实例能访问到这些变量，
+需通过类提供的接口进行访问；不能用'from module import *'导入
+（2）__xxx 类中的私有变量/方法名 （Python的函数也是对象，所以成员方法称为成员变量也行得通。）,
+" 双下划线 " 开始的是私有成员，意思是只有类对象自己能访问，连子类对象也不能访问到这个数据。
+<br>
+xrange 用法与 range 完全相同，所不同的是生成的不是一个list对象，而是一个生成器。
+生成器表达式的语法和列表解析一样，只不过生成器表达式是被()括起来的，而不是[]
+生成器就是一类特殊的迭代器
+对于可迭代对象，可以使用内建函数iter()来获取它的迭代器对象
+list本身是一个可迭代对象，通过iter()方法可以获得list的迭代器对象
+
+
+osi七层网络模型:物理层、数据链路层、网络层、传输层、会话层、表示层、应用层</div>
+    </div>
+</body>
+<script>
+    $(function(){
+    })
+</script>
+<script>
+    $(function(){
+        $(".title").on("click",function(){
+            if($(this).parent().children("table").css("display")=="none") {
+                $(this).parent().children("table").css("display","block");
+                $(this).parent().children('span').eq(0).attr('class', 'glyphicon glyphicon-minus')
+            } else {
+                $(this).parent().children("table").css("display","none");
+                 $(this).parent().children('span').eq(0).attr('class', 'glyphicon glyphicon-plus')
+            }
+        });
+        var $tr = $(".contents");
+        $tr.each(function () {
+            $(this).click(function(){
+                if($(this).find("table").css("display")=="none") {
+                    $(this).find("table").css("display","block");
+                    $(this).find('span').eq(0).attr('class', 'glyphicon glyphicon-minus')
+            } else {
+                    $(this).find("table").css("display","none");
+                    $(this).find('span').eq(0).attr('class', 'glyphicon glyphicon-plus')
+            }
+            })
+        })
+    });
+</script>
+<script>
+    $(function() {
+        var $div = $('.top').find('div');
+        $div.each(function () {
+            $(this).mouseover(function () {
+                $(this).css("background-color", "red");
+                $(this).css("opacity", 0.1);
+            });
+            $(this).mouseout(function () {
+                $(this).css("background-color", "");
+                $(this).css("opacity", 1);
+            });
+        })
+{#        $('.top').mouseover(function () {#}
+{#            $('.top').css("background-color", "red");#}
+{#        })#}
+    })
+</script>
+</html>
