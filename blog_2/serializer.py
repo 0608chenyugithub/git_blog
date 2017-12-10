@@ -2,6 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from blog_2.models import *
 
+
 class PythonTitleSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PythonTitle

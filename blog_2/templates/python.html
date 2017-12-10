@@ -1,4 +1,5 @@
 {% extends 'base_admin.html' %}
+{% load chenyu_blog_2_filter %}
 {% load staticfiles %}
 {% block style %}
     .row {
@@ -9,35 +10,65 @@
     }
 {% endblock %}
 {% block right-content %}
-        <div class="col-md-10 right-content" style="text-align:left;">
-			<form action="/api/pythontitle/" method="post" class="form form-horizontal" id="demoform-1">
-                {% csrf_token %}
-					<legend>编辑</legend>
-					<div class="row cl">
-						<label class="form-label col-xs-4 col-sm-3">标题：</label>
-						<div class="formControls col-xs-8 col-sm-9">
-							<input type="text" value="{{ python_subtitle.python_title.title }}" name="title" class="input-text" autocomplete="off" placeholder="标题" style="width: 80%">
-						</div>
-					</div>
-                    <div class="row cl">
-                        <label class="form-label col-xs-4 col-sm-3">子标题：</label>
-                        <div class="formControls col-xs-8 col-sm-9">
-                            <input type="text" value="{{ python_subtitle.sub_title }}" class="input-text" autocomplete="off" placeholder="子标题" style="width: 80%">
-                        </div>
-					</div>
-                   <div class="row cl">
-                        <label class="form-label col-xs-4 col-sm-3">文本域：</label>
-                        <div class="formControls col-xs-8 col-sm-9">
-                            <textarea class="textarea"  rows="" cols=""  name="" style="min-height:400px;width: 80%">{{ python_subtitle.detail }}</textarea>
-                        </div>
-                    </div>
-					<div class="row cl">
-						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-							<input class="btn btn-primary radius" type="submit" value="保存">
-                            <input class="btn btn-primary radius" type="submit" value="取消">
-						</div>
-					</div>
-				</form>
+        <div class="col-md-10 right-content" style="padding:0;text-align:left;">
+            <div style="margin:40px 0 40px 10px;">
+                <a href="add" class="btn btn-success btn-lg" role="button">新增标题</a>
+                <a href="add_sub" class="btn btn-success btn-lg" role="button">新增子标题和详情</a>
+            </div>
+			<table class="table table-border table-bg table-bordered">
+              <thead>
+                <tr>
+                    <th width="10%">标题</th>
+                    <th width="10%">子标题</th>
+                    <th width="30%">详情</th>
+                    <th width="50%">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for python_title in python_title_list %}
+                  {% if  python_title.python_sub_title.all %}
+                      {% for python_subtitle in python_title.python_sub_title.all %}
+                        <tr class="">
+                            <td>{{ python_title.title }}</td>
+                            <td>{{ python_subtitle.sub_title }}</td>
+                            <td>{{ python_subtitle.detail }}</td>
+                            <td>
+                                <a href="edit/{{ python_title.id }}" class="btn btn-primary btn-lg">编辑标题</a>
+                                <a href="edit_sub/{{ python_subtitle.id }}" class="btn btn-primary btn-lg">编辑子标题和详情</a>
+                                <button class="btn btn-danger btn-lg" onclick="delete_title('/api/pythontitle/{{ python_title.id }}')">删除标题</button>
+                                <button class="btn btn-danger btn-lg" onclick="delete_subtitle('/api/pythonsubtitle/{{ python_subtitle.id }}')">删除子标题和详情</button>
+                            </td>
+                         </tr>
+                      {% endfor %}
+                  {% else %}
+                  <tr class="">
+                            <td>{{ python_title.title }}</td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <a href="edit/{{ python_title.id }}" class="btn btn-primary btn-lg">编辑标题</a>
+                                <button class="btn btn-danger btn-lg" onclick="delete_title('/api/pythontitle/{{ python_title.id }}')">删除标题</button>
+                            </td>
+                         </tr>
+                  {% endif %}
+              {% endfor %}
+              </tbody>
+            </table>
+            <div id="pagination" style="text-align: right">
+                <ul id="pagination-flickr">
+                {% if python_title_list.has_previous %}
+                <span class="previous"><a href="?page={{ python_title_list.previous_page_number }}">&laquo;上一页</a></span>
+                {% else %}
+                <span class="previous-off">&laquo;上一页</span>
+                {% endif %}
+                 <span class="active">{{ python_title_list.number }}/{{ python_title_list.paginator.num_pages }}</span>
+                {% if python_title_list.has_next %}
+                  <span class="next"><a href="?page={{ python_title_list.next_page_number }}">下一页 &raquo;</a></span>
+                {% else %}
+                  <span class="next-off">下一页 &raquo;</span>
+                {% endif %}
+               </ul>
+            </div>
         </div>
 
 {% endblock %}
@@ -46,6 +77,64 @@
     $(function(){
         var height = $('.left-content').height();
         $('.right-content').css('height',height);
-    })
+    });
+
+    var delete_title = function(url){
+        swal({
+            title: '确定删除吗',
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonText: '取消',
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: '确定',
+            closeOnConfirm: false
+        }, function(){
+            $.ajax({
+                type: 'delete',
+                url:  url,
+                success: function () {
+                     swal({
+                        title: '删除成功',
+                        type: 'success',
+                        confirmButtonColor: '#53aeff',
+                        confirmButtonText: '确定',
+                        closeOnConfirm: false
+                    }, function () {
+                          setTimeout(function () {
+                    window.location.href = '/python/';
+                }, 1000);
+                     });
+                }
+            })})
+    };
+
+    var delete_subtitle = function(url){
+        swal({
+            title: '确定删除吗',
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonText: '取消',
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: '确定',
+            closeOnConfirm: false
+        }, function(){
+            $.ajax({
+                type: 'delete',
+                url:  url,
+                success: function () {
+                    swal({
+                        title: '删除成功',
+                        type: 'success',
+                        confirmButtonColor: '#DD6B55',
+                        confirmButtonText: '确定',
+                        closeOnConfirm: false
+                    }, function () {
+                        setTimeout(function () {
+                    window.location.href = '/python/';
+                }, 1000);
+                    });
+                }
+            })});
+    };
 </script>
 {% endblock %}

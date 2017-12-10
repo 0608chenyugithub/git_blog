@@ -1,0 +1,55 @@
+{% extends 'base_admin.html' %}
+{% load staticfiles %}
+{% block style %}
+    .row {
+        margin-top:60px;
+    }
+    .row label {
+        text-align: right;
+    }
+{% endblock %}
+{% block right-content %}
+        <div class="col-md-10 right-content" style="text-align:left;">
+			<form id="ajaxForm"
+                  {% if python_title %}
+                        action="/api/pythontitle/{{ python_title.id }}/" method="patch"
+                  {% else %}action="/api/pythontitle/" method="post"
+                  {% endif %}>{% csrf_token %}
+					<legend>{% if python_title %}编辑{% else %}新增{% endif %}</legend>
+					<div class="row cl">
+						<label class="form-label col-xs-4 col-sm-3">标题：</label>
+						<div class="formControls col-xs-8 col-sm-9">
+							<input type="text" value="{{ python_title.title }}" name="title" class="input-text" autocomplete="off" placeholder="标题" style="width: 80%">
+						</div>
+					</div>
+					<div class="row cl">
+						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+							<input class="btn btn-primary radius" type="submit" value="确定">
+                            <a href="/python/" class="btn btn-success radius">取消</a>
+						</div>
+					</div>
+				</form>
+        </div>
+
+{% endblock %}
+{% block js %}
+<script>
+    $(function(){
+        var height = $('.left-content').height();
+        $('.right-content').css('height',height);
+    });
+
+    $("#ajaxForm").ajaxFormDialog(function(){
+        swal({
+            title: '保存成功',
+            type: 'success',
+            confirmButtonColor: '#53aeff',
+            confirmButtonText: '确定',
+            closeOnConfirm: false
+                    }, function () {
+            setTimeout(function () {
+                    window.location.href = '/python/';
+                }, 1000);
+        });}, null, null);
+</script>
+{% endblock %}

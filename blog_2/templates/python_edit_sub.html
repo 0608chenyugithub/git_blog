@@ -1,0 +1,75 @@
+{% extends 'base_admin.html' %}
+{% load staticfiles %}
+{% block style %}
+    .row {
+        margin-top:60px;
+    }
+    .row label {
+        text-align: right;
+    }
+{% endblock %}
+{% block right-content %}
+        <div class="col-md-10 right-content" style="text-align:left;">
+			<form id="ajaxForm" class="form form-horizontal" id="demoform-1"
+                    {% if python_subtitle %}action="/api/pythonsubtitle/{{ python_subtitle.id }}/" method="patch"
+                    {% else %}action="/api/pythonsubtitle/" method="post">
+                    {% endif %}
+					<legend>新增子标题和内容</legend>
+                    {% if python_title %}
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-3">标题：</label>
+                                <div class="formControls col-xs-8 col-sm-9">
+                                    <select name="parentId">
+                                        {% for title in python_title %}
+                                            <option value="{{ title.id }}">{{ title.title }}</option>
+                                        {% endfor%}
+                                    </select>
+                                </div>
+                        </div>
+                    {% endif %}
+
+					<div class="row cl">
+						<label class="form-label col-xs-4 col-sm-3">子标题：</label>
+						<div class="formControls col-xs-8 col-sm-9">
+							<input type="text" name="sub_title" value="{{ python_subtitle.sub_title }}" class="input-text" autocomplete="off" placeholder="子标题" style="width: 80%">
+						</div>
+					</div>
+					<div class="row cl">
+						<label class="form-label col-xs-4 col-sm-3">文本域：</label>
+						<div class="formControls col-xs-8 col-sm-9">
+							<textarea class="textarea" placeholder="说点什么..." rows="" cols="" value="" name="detail" style="min-height:400px;width: 80%">
+                                {{ python_subtitle.detail }}
+                            </textarea>
+						</div>
+					</div>
+					<div class="row cl">
+						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+							<input class="btn btn-primary radius" type="submit" value="保存">
+                            <a href="/python/" class="btn btn-success radius">取消</a>
+						</div>
+					</div>
+			</form>
+        </div>
+
+{% endblock %}
+{% block js %}
+<script>
+    $(function(){
+        var height = $('.left-content').height();
+        $('.right-content').css('height',height);
+    });
+
+    $("#ajaxForm").ajaxFormDialog(function(){
+        swal({
+            title: '保存成功',
+            type: 'success',
+            confirmButtonColor: '#53aeff',
+            confirmButtonText: '确定',
+            closeOnConfirm: false
+                    }, function () {
+            setTimeout(function () {
+                    window.location.href = '/python/';
+                }, 1000);
+        });}, null, null);
+</script>
+{% endblock %}
