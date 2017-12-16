@@ -1,0 +1,64 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>登录</title>
+    <link href="{% static 'css/bootstrap_337.min.css' %}" rel="stylesheet">
+    <script src="{% static 'js/jquery_321.min.js' %}"></script>
+    <script src="{% static 'js/jquery.form.js' %}"></script>
+    <script src="{% static 'js/bootstrap_337.min.js' %}"></script>
+</head>
+<style type="text/css">
+    body{
+		background-image: url(../static/img/bg.jpg);
+        background-repeat: no-repeat;
+		background-size: 100% 100%;
+	}
+</style>
+<body>
+    <div class="" id="login" style="margin:130px 0 170px 800px;width:400px;height:360px;border:1px solid #000;background-color: rgba(255,255,255,0.18)">
+        <div class="col-md-12 col-sm-12" style="font-size:20px;margin-top:20px;text-align:center">
+            登录
+        </div>
+        <form id="ajaxLogin" method="post" action="/login/">
+            {% csrf_token %}
+            <div class="col-md-12 col-sm-12" style="margin:50px;">
+                    <label class="col-md-3 col-sm-3" style="text-align: right">用户名:</label>
+                    <input class="col-md-9 col-sm-9" id="username" name="username"
+                           value="" type="text"
+                           placeholder="用户名" style="width:160px">
+            </div>
+            <div class="col-md-12 col-sm-12" style="margin:50px;">
+                    <label class="col-md-3 col-sm-3" style="text-align: right">密码:</label>
+                    <input class="col-md-9 col-sm-9" type="password" id="password" name="password" value=""
+                           placeholder="密码"  style="width:160px;">
+            </div>
+
+            <div style="text-align: center;">
+                 <input type="submit" value="立即登录"
+                          class="" style="background:#35c226;">
+            </div>
+        </form>
+        <span id="errorMessage" style="margin-top:10px;text-align: center;display:block;"></span>
+    </div>
+</body>
+<script>
+    $("#ajaxLogin").submit(function () {
+        var options = {
+            beforeSubmit: function () {
+                if ($('#username').val() == '' || $("#password") == ''){
+                    $('#errorMessage').html('请输入用户名或密码');
+                    $('#ajaxLogin').resetForm();
+                    return false;
+                }
+            },
+            success: function (res) {
+                if (res.info)
+                    $('#errorMessage').html(res.info);
+            }
+        };
+       $("#ajaxLogin").ajaxSubmit(options);
+{#        return false#}
+    })
+</script>
+</html>

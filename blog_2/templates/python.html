@@ -12,8 +12,8 @@
 {% block right-content %}
         <div class="col-md-10 right-content" style="padding:0;text-align:left;">
             <div style="margin:40px 0 40px 10px;">
-                <a href="add" class="btn btn-success btn-lg" role="button">新增标题</a>
-                <a href="add_sub" class="btn btn-success btn-lg" role="button">新增子标题和详情</a>
+                <a href="/admin/python/add" class="btn btn-success btn-lg" role="button">新增标题</a>
+                <a href="/admin/python/add_sub" class="btn btn-success btn-lg" role="button">新增子标题和详情</a>
             </div>
 			<table class="table table-border table-bg table-bordered">
               <thead>
@@ -33,10 +33,10 @@
                             <td>{{ python_subtitle.sub_title }}</td>
                             <td>{{ python_subtitle.detail }}</td>
                             <td>
-                                <a href="edit/{{ python_title.id }}" class="btn btn-primary btn-lg">编辑标题</a>
-                                <a href="edit_sub/{{ python_subtitle.id }}" class="btn btn-primary btn-lg">编辑子标题和详情</a>
-                                <button class="btn btn-danger btn-lg" onclick="delete_title('/api/pythontitle/{{ python_title.id }}')">删除标题</button>
-                                <button class="btn btn-danger btn-lg" onclick="delete_subtitle('/api/pythonsubtitle/{{ python_subtitle.id }}')">删除子标题和详情</button>
+                                <a href="/admin/python/edit/{{ python_title.id }}" class="btn btn-primary btn-lg">编辑标题</a>
+                                <a href="/admin/python/edit_sub/{{ python_subtitle.id }}" class="btn btn-primary btn-lg">编辑子标题和详情</a>
+                                <button class="btn btn-danger btn-lg" onclick="delete_title('/admin/api/pythontitle/{{ python_title.id }}')">删除标题</button>
+                                <button class="btn btn-danger btn-lg" onclick="delete_subtitle('/admin/api/pythonsubtitle/{{ python_subtitle.id }}')">删除子标题和详情</button>
                             </td>
                          </tr>
                       {% endfor %}
@@ -46,8 +46,8 @@
                             <td></td>
                             <td></td>
                             <td>
-                                <a href="edit/{{ python_title.id }}" class="btn btn-primary btn-lg">编辑标题</a>
-                                <button class="btn btn-danger btn-lg" onclick="delete_title('/api/pythontitle/{{ python_title.id }}')">删除标题</button>
+                                <a href="/admin/python/edit/{{ python_title.id }}" class="btn btn-primary btn-lg">编辑标题</a>
+                                <button class="btn btn-danger btn-lg" onclick="delete_title('/admin/api/pythontitle/{{ python_title.id }}')">删除标题</button>
                             </td>
                          </tr>
                   {% endif %}
@@ -101,7 +101,7 @@
                         closeOnConfirm: false
                     }, function () {
                           setTimeout(function () {
-                    window.location.href = '/python/';
+                    window.location.href = '/admin/python/';
                 }, 1000);
                      });
                 }
@@ -125,12 +125,12 @@
                     swal({
                         title: '删除成功',
                         type: 'success',
-                        confirmButtonColor: '#DD6B55',
+                        confirmButtonColor: '#53aeff',
                         confirmButtonText: '确定',
                         closeOnConfirm: false
                     }, function () {
                         setTimeout(function () {
-                    window.location.href = '/python/';
+                    window.location.href = '/admin/python/';
                 }, 1000);
                     });
                 }

@@ -1,8 +1,8 @@
 {% extends 'base_admin.html' %}
 {% load staticfiles %}
 {% block right-content %}
-        <div class="col-md-10 right-content" style="text-align:center;background-color: #269abc">
-            <h1>后台管理</h1>
+        <div class="col-md-10 right-content" style="text-align:center;">
+
         </div>
 {% endblock %}
 {% block js %}
@@ -10,6 +10,7 @@
     $(function(){
         var height = $('.left-content').height();
         $('.right-content').css('height',height);
+        $('.right-content').append('<marquee direction="right"><h1>欢迎{{ user_name }}用户进入后台管理</h1></marquee>');
     })
 </script>
 {% endblock %}

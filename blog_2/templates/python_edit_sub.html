@@ -11,8 +11,8 @@
 {% block right-content %}
         <div class="col-md-10 right-content" style="text-align:left;">
 			<form id="ajaxForm" class="form form-horizontal" id="demoform-1"
-                    {% if python_subtitle %}action="/api/pythonsubtitle/{{ python_subtitle.id }}/" method="patch"
-                    {% else %}action="/api/pythonsubtitle/" method="post">
+                    {% if python_subtitle %}action="/admin/api/pythonsubtitle/{{ python_subtitle.id }}/" method="patch"
+                    {% else %}action="/admin/api/pythonsubtitle/" method="post">
                     {% endif %}
 					<legend>新增子标题和内容</legend>
                     {% if python_title %}
@@ -45,7 +45,7 @@
 					<div class="row cl">
 						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
 							<input class="btn btn-primary radius" type="submit" value="保存">
-                            <a href="/python/" class="btn btn-success radius">取消</a>
+                            <a href="/admin/python/" class="btn btn-success radius">取消</a>
 						</div>
 					</div>
 			</form>
@@ -68,7 +68,7 @@
             closeOnConfirm: false
                     }, function () {
             setTimeout(function () {
-                    window.location.href = '/python/';
+                    window.location.href = '/admin/python/';
                 }, 1000);
         });}, null, null);
 </script>
