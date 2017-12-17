@@ -1,5 +1,11 @@
 {% extends 'base_admin.html' %}
 {% load staticfiles %}
+{% block my_js %}
+    <script src="{% static 'js/kindeditor-4.1.10/kindeditor-min.js' %}"></script>
+{#    <script src="{% static 'js/kindeditor-4.1.10/kindeditor-all-min.js' %}"></script>#}
+    <script src="{% static 'js/kindeditor-4.1.10/lang/zh_CN.js' %}"></script>
+    <script src="{% static 'js/kindeditor-4.1.10/config.js' %}"></script>
+{% endblock %}
 {% block style %}
     .row {
         margin-top:60px;
@@ -12,9 +18,14 @@
         <div class="col-md-10 right-content" style="text-align:left;">
 			<form id="ajaxForm" class="form form-horizontal" id="demoform-1"
                     {% if python_subtitle %}action="/admin/api/pythonsubtitle/{{ python_subtitle.id }}/" method="patch"
-                    {% else %}action="/admin/api/pythonsubtitle/" method="post">
+                    {% else %}action="/admin/api/pythonsubtitle/" method="post"
+                    {% endif %}>
+                    {% csrf_token %}
+                    {% if python_subtitle %}
+					    <legend>编辑子标题和内容</legend>
+                    {% else %}
+                        <legend>新增子标题和内容</legend>
                     {% endif %}
-					<legend>新增子标题和内容</legend>
                     {% if python_title %}
                         <div class="row cl">
                             <label class="form-label col-xs-4 col-sm-3">标题：</label>
@@ -37,7 +48,7 @@
 					<div class="row cl">
 						<label class="form-label col-xs-4 col-sm-3">文本域：</label>
 						<div class="formControls col-xs-8 col-sm-9">
-							<textarea class="textarea" placeholder="说点什么..." rows="" cols="" value="" name="detail" style="min-height:400px;width: 80%">
+							<textarea class="textarea" id="textarea-content" placeholder="说点什么..." rows="" cols="" value="" name="detail" style="min-height:400px;width: 80%">
                                 {{ python_subtitle.detail }}
                             </textarea>
 						</div>
@@ -57,9 +68,10 @@
     $(function(){
         var height = $('.left-content').height();
         $('.right-content').css('height',height);
+{#        KindEditor.instances[0].sync();#}
     });
 
-    $("#ajaxForm").ajaxFormDialog(function(){
+        $("#ajaxForm").ajaxFormDialog(function(){
         swal({
             title: '保存成功',
             type: 'success',

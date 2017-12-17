@@ -1,23 +1,24 @@
 # -*- coding:utf-8 -*-
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from blog_2.models import *
 from blog_2.serializer import *
 from blog_2.models import *
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from chenyu_blog_2.settings import REST_FRAMEWORK
 
 
 class PythonTitleViewSet(viewsets.ModelViewSet):
 	queryset = PythonTitle.objects.all()
 	serializer_class = PythonTitleSerializer
-	# authentication_classes = (SessionAuthentication, BasicAuthentication)
-	# permission_classes = REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES']
+	authentication_classes = (BasicAuthentication, )
+	permission_classes = (permissions.IsAuthenticated,)
 
 
 class PythonSubTitleViewSet(viewsets.ModelViewSet):
 	queryset = PythonSubTitle.objects.all()
 	serializer_class = PythonSubTitleSerializer
+	authentication_classes = (BasicAuthentication, )
+	permission_classes = (permissions.IsAuthenticated,)
 
 	def perform_create(self, serializer):
 		parent_id = self.request.POST.get('parentId', None)

@@ -14,7 +14,8 @@
                   {% if python_title %}
                         action="/admin/api/pythontitle/{{ python_title.id }}/" method="patch"
                   {% else %}action="/admin/api/pythontitle/" method="post"
-                  {% endif %}>{% csrf_token %}
+                  {% endif %}>
+                  {% csrf_token %}
 					<legend>{% if python_title %}编辑{% else %}新增{% endif %}</legend>
 					<div class="row cl">
 						<label class="form-label col-xs-4 col-sm-3">标题：</label>

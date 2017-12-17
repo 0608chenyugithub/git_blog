@@ -58,6 +58,11 @@ var form = (function(baseModules) {
         var $form = $(this);
         var initFormDataMapping = form.getFormDataMapping($form);
         $form.find('[type=submit]').click(function () {
+            var ele = $('#textarea-content');
+            if (ele.length) {
+                var htmlStr = KindEditor.instances[0].html().trim();
+                $('#textarea-content').val(htmlStr);
+            }
             if (!$form.valid()) {
                 return false;
             }

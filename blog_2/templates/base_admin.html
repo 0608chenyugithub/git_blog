@@ -9,7 +9,7 @@
     {% block my_css %}
     {% endblock %}
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <script src="{% static 'js/jquery_211.min.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/jquery.form.js' %}"></script>
     <script src="{% static 'js/sweetalert.min.js' %}"></script>
     <script src="{% static 'js/common.js' %}"></script>
@@ -46,9 +46,9 @@
      <div>
         <div class="col-md-4 top" style="height:60px;text-align:left"><h3><font color="white"> 后台管理界面</font></h3>
         </div>
-        <div class="col-md-7 top" style="height:60px;text-align:right"><h3><font color="white"> 当前登录用户:{{ user_name }}</font></h3>
+        <div class="col-md-7 top" style="height:60px;text-align:right"><h3><font color="white">[当前登录用户:{{ user_name }}]</font></h3>
         </div>
-        <div class="col-md-1 top" style="height:60px;text-align:right"><a href="/logout/"><h3><font color="white"> [退出]</font></h3></a>
+        <div class="col-md-1 top" style="height:60px;text-align:left"><a href="/logout/"><h3><font color="white"> [退出]</font></h3></a>
         </div>
 {#        {% include 'ad.html' %}#}
         {% include 'left-content.html' %}

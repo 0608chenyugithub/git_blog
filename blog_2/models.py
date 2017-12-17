@@ -16,4 +16,4 @@ class PythonTitle(models.Model):
 class PythonSubTitle(models.Model):
 	python_title = models.ForeignKey(PythonTitle, related_name='python_sub_title', on_delete=models.CASCADE)
 	sub_title = models.CharField(null=False, max_length=300, verbose_name='子章节名称')
-	detail = models.CharField(null=False, verbose_name='详情', max_length=3000)
+	detail = models.TextField(null=False, verbose_name='详情', max_length=3000)

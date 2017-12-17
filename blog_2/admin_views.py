@@ -3,6 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 
@@ -17,6 +18,7 @@ def home(request):
 
 # @api_view(['POST'])
 # @permission_classes((permissions.AllowAny,))
+@csrf_exempt
 def handleLogin(request):
 	if request.method == "POST":
 		username = request.POST.get('username', '')
@@ -48,7 +50,7 @@ def python(request):
 	python_title_list = PythonTitle.objects.all()
 
 	def getPage(request, python_title_list):
-		paginator = Paginator(python_title_list, 6)
+		paginator = Paginator(python_title_list,3)
 		try:
 			page = int(request.GET.get('page', 1))
 			title_list = paginator.page(page)
