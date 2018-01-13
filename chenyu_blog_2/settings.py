@@ -142,8 +142,10 @@ AUTHENTICATION_BACKENDS = (
 )
 
 MEDIA_URL = '/uploads/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')#文件上传到的绝对路径
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')  # 文件上传到的绝对路径 保存上传图片的根目录
 
 # # Session
 # SESSION_COOKIE_AGE = 60 * 60 * 24
 # SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+AUTH_USER_MODEL = 'blog_2.User'  # 继承AbstractUser时必须加上

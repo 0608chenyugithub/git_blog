@@ -12,8 +12,8 @@
         <div class="col-md-10 right-content" style="text-align:left;">
 			<form id="ajaxForm"
                   {% if python_title %}
-                        action="/admin/api/pythontitle/{{ python_title.id }}/" method="patch"
-                  {% else %}action="/admin/api/pythontitle/" method="post"
+                        action="{% url 'admin-urls:admin-api:python_title-detail' python_title.id %}" method="patch"
+                  {% else %}action="{% url 'admin-urls:admin-api:python_title-list' %}" method="post"
                   {% endif %}>
                   {% csrf_token %}
 					<legend>{% if python_title %}编辑{% else %}新增{% endif %}</legend>
@@ -26,7 +26,7 @@
 					<div class="row cl">
 						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
 							<input class="btn btn-primary radius" type="submit" value="确定">
-                            <a href="/admin/python/" class="btn btn-success radius">取消</a>
+                            <a href="{% url 'admin-urls:python' %}" class="btn btn-success radius">取消</a>
 						</div>
 					</div>
 				</form>
@@ -49,7 +49,7 @@
             closeOnConfirm: false
                     }, function () {
             setTimeout(function () {
-                    window.location.href = '/admin/python/';
+                    window.location.href = '{% url 'admin-urls:python' %}';
                 }, 1000);
         });}, null, null);
 </script>

@@ -1,0 +1,101 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>登录</title>
+    <link href="{% static 'css/bootstrap_337.min.css' %}" rel="stylesheet">
+    <script src="{% static 'js/jquery_321.min.js' %}"></script>
+    <script src="{% static 'js/jquery.form.js' %}"></script>
+    <script src="{% static 'js/bootstrap_337.min.js' %}"></script>
+</head>
+<style type="text/css">
+    input::-webkit-input-placeholder {
+        /* placeholder颜色  */
+        color: #23c290;
+         /* placeholder字体大小  */
+         font-size: 20px;
+         /* placeholder位置  */
+{#        text-align: right;#}
+     }
+{#    body{#}
+{#		background-image: url(../static/img/bg.jpg);#}
+{#        background-repeat: no-repeat;#}
+{#		background-size: 100% 100%;#}
+{#	}#}
+{#    #login {#}
+{#    position: fixed;#}
+{#    left: 40%;#}
+{#    top: 30%;#}
+{#    width: 300px;#}
+{#    height: 200px;#}
+{#    margin: -100px 0px 0px -150px;#}
+{#}#}
+</style>
+<body style="background-image: url({% static 'img/test.jpg' %})">
+    <div class="" id="login" style="width:400px;height:360px;border:1px solid #000;background-color: rgba(255,255,255,0.18)">
+        <div class="col-md-12 col-sm-12" style="color:#23c290;font-size:20px;margin-top:20px;text-align:center">
+            登  录
+        </div>
+        <form id="ajaxLogin" method="post" action="{% url 'admin-urls:handle_login' %}">
+            {% csrf_token %}
+            <div class="col-md-12 col-sm-12">
+{#                    <label class="col-md-3 col-sm-3" style="text-align: right"></label>#}
+                    <input class="col-md-12 col-sm-12" id="username" name="username"
+                           value="" type="text"
+                           placeholder="用户名" style="font-size:20px;background-color:rgba(255,255,255,0.18);border:1px solid #23c290;margin-top:50px;height:40px">
+            </div>
+            <div class="col-md-12 col-sm-12">
+{#                    <label class="col-md-3 col-sm-3" style="text-align: right"></label>#}
+                    <input class="col-md-12 col-sm-12" type="password" id="password" name="password" value=""
+                           placeholder="密码"  style="font-size:20px;background-color:rgba(255,255,255,0.18);border:1px solid #23c290;margin-top:30px;height:40px">
+            </div>
+
+            <div class="col-md-12 col-sm-12" style="text-align: center;">
+                 <input type="submit" value="立 即 登 录"
+                          class="col-md-12 col-sm-12"
+                         style="font-size:20px;background:#23c290;margin-top:60px;height:40px;border:1px solid #23c290;">
+            </div>
+            <span id="errorMessage" style="color:#ff0000;margin-top:10px;text-align: center;display:block;"></span>
+        </form>
+{#        <div class="col-md-12 col-sm-12" style="text-align: center;">#}
+{#                 <button id="register" type=""#}
+{#                          class="col-md-12 col-sm-12"#}
+{#                         style="font-size:20px;background:#23c290;margin-top:60px;height:40px;border:1px solid #23c290;">立 即 注 册</button>#}
+{#            </div>#}
+    </div>
+</body>
+<script>
+    $(function () {
+        var login_div = $("#login");//获取div块对象
+        var Height=document.documentElement.clientHeight;//取得浏览器页面可视区域的宽度
+        var Width=document.documentElement.clientWidth;//取得浏览器页面可视区域的宽度
+        var h1 = login_div.height();//获取div块的高度值
+        var h2 = login_div.width();//获取div块的宽度值
+        var topOffset= (Height - h1)/2;
+        var leftOffset= (Width - h2)/2;
+        login_div.offset({top:topOffset,left:leftOffset});
+    })
+</script>
+<script>
+    $('#ajaxLogin').submit(function(){
+    var options = {
+                success: function (res) {
+                    if (res.info) {
+                        $('#errorMessage').html(res.info);
+                        $('#ajaxLogin').resetForm();//重置表格
+                    }
+                    else if (res.redirect_url) {
+                        window.location.href = res.redirect_url;
+                    }
+                },
+                beforeSubmit: function () {
+                     if ($('#username').val() == '' || $('#password').val() == ''){
+                         $('#errorMessage').html('请输入用户名和密码');
+                         return false;l
+                     }
+                }};
+        $(this).ajaxSubmit(options);
+        return false;
+    })
+</script>
+</html>

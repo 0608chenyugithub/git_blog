@@ -2,11 +2,17 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
-class User(models.Model):
-    username = models.CharField(max_length=20)
-    password = models.CharField(max_length=20)
+class User(AbstractUser):
+	GENDER = (('1', '男'), ('2', '女'))
+	nickname = models.CharField(max_length=30, default='', blank=True)
+	gender = models.CharField(choices=GENDER, default='1', blank=True, max_length=4)
+	age = models.CharField(default='18', blank=True, max_length=3)
+	school = models.CharField(default='', blank=True, max_length=40)
+	desc = models.TextField(default='', max_length=200, blank=True)
+	img = models.ImageField(upload_to='img', blank=True)
 
 
 class PythonTitle(models.Model):

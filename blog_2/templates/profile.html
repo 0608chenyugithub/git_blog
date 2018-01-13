@@ -1,0 +1,59 @@
+{% extends 'base_admin.html' %}
+{% load chenyu_blog_2_filter %}
+{% load staticfiles %}
+{% block style %}
+    .row {
+        margin-top:30px;
+    }
+    .row label {
+        text-align: right;
+    }
+{% endblock %}
+{% block right-content %}
+    <div class="col-md-10 right-content">
+        <div class="col-md-6" style="text-align:left;">
+                <legend>欢迎来到个人中心</legend>
+                <div style="margin:40px 0 40px 10px;">
+                    <a href="{% url 'admin-urls:profile_edit' u.id %}" class="btn btn-success btn-lg" role="button">编辑个人资料</a>
+                    <a href="{% url 'admin-urls:password_edit' u.id %}" class="btn btn-success btn-lg" role="button">修改密码</a>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-3">姓名：</label>
+                        <div class="formControls col-xs-8 col-sm-9">{{ u.username }}
+                        </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-3">性别：</label>
+                    <div class="formControls col-xs-8 col-sm-9">{{ u.get_gender_display  }}
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-3">年龄：</label>
+                    <div class="formControls col-xs-8 col-sm-9">{{ u.age }}
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-3">学校：</label>
+                    <div class="formControls col-xs-8 col-sm-9">{{ u.school }}
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-3">自我评价：</label>
+                    <div class="formControls col-xs-8 col-sm-9">{{ u.desc }}
+                    </div>
+                </div>
+        </div>
+        <div class="col-md-4" style="text-align:center;margin-top:160px">
+    {#        <label class="form-label col-xs-4 col-sm-3">头像：</label>#}
+            <img  src="{{ u.img.url }}" style="height:150px;width:100px;">
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+<script>
+    $(function(){
+        var height = $('.left-content').height();
+        $('.right-content').css('height',height);
+    });
+</script>
+{% endblock %}

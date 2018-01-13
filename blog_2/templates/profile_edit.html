@@ -1,0 +1,167 @@
+{% extends 'base_admin.html' %}
+{% load staticfiles %}
+{% block style %}
+    .row {
+        margin-top:30px;
+    }
+    .row label {
+        text-align: right;
+    }
+{% endblock %}
+{% block right-content %}
+        <div class="col-md-10 right-content" style="text-align:left;">
+			<form id="ajaxForm"  enctype="multipart/form-data"
+                  action="{% url 'admin-urls:profile_save' %}" method="post">
+                  {% csrf_token %}
+					<legend>编辑个人资料</legend>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-3">姓名：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" value="{{ u.username }}" name="username" class="input-text"  placeholder="姓名" style="width: 80%">
+                            </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-3">头像：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <img src="{{ u.img.url }}" style="height:150px;width:100px;">
+                               <input type="file" name="imgFile">
+{#                                <button id="uploadImage" class="btn btn-primary radius">上传</button>#}
+                            </div>
+                    </div>
+ 					<div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-3">姓别：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" value="{{ u.get_gender_display }}" name="gender" class="input-text"  placeholder="姓别" style="width: 80%">
+                            </div>
+                    </div>
+					<div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-3">年龄：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" value="{{ u.age }}" name="age" class="input-text"  placeholder="年龄" style="width: 80%">
+                            </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-3">学校：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" value="{{ u.school }}" name="school" class="input-text"  placeholder="学校" style="width: 80%">
+                            </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-3">自我评价：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <textarea class="textarea" name="desc" id="desc" placeholder="说点什么..." style="min-height:180px;width: 80%">
+                                    {{ u.desc }}
+                                </textarea>
+                            </div>
+                    </div>
+                    <div class="row cl">
+						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+							<input class="btn btn-primary radius" type="submit" value="保存">
+                            <a href="{% url 'admin-urls:profile' %}" class="btn btn-success radius">取消</a>
+						</div>
+					</div>
+				</form>
+        </div>
+
+{% endblock %}
+{% block js %}
+<script>
+    $(function(){
+        var height = $('.left-content').height();
+        $('.right-content').css('height',height);
+    });
+
+    $("#ajaxForm").submit(function () {
+        var config = {
+                title: '确定继续吗',
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonText: '取消',
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: '确定',
+                closeOnConfirm: false
+            };
+        var options = {
+{#            beforeSubmit: function () {#}
+{#                var flag;#}
+{#                swal(config, function(){#}
+{#                    alert('fff')#}
+{#                    flag = true;#}
+{#                });#}
+{#                return flag;#}
+{#            },#}
+            success: function (res) {
+               swal({
+                    title: '保存成功',
+                    type: 'success',
+                    confirmButtonColor: '#53aeff',
+                    confirmButtonText: '确定',
+                    closeOnConfirm: false
+                            }, function () {
+                    setTimeout(function () {
+                            window.location.href = '{% url 'admin-urls:profile' %}';
+                        }, 1000);
+                });
+            }
+        };
+       $(this).ajaxSubmit(options);
+        return false
+    })
+
+
+
+
+
+
+{#    $('[type="submit"]').click(function(){#}
+{#        var formData = new FormData();#}
+{#data: new FormData($('#ajaxForm')[0])#}
+{#    formData.append("username", $('#username'));#}
+{#    formData.append("imgFile", $('[type="file"]').files[0]);#}
+{#    formData.append("gender", $('#gender'));#}
+{#    formData.append("age", $('#age'));#}
+{#    formData.append("desc", $('#desc'));#}
+{#    var request = new XMLHttpRequest();#}
+{#    request.open("POST", "{% url '' %}");#}
+{#    request.send(formData);#}
+{#    $.ajax({#}
+{#        type: 'post',#}
+{#        data: new FormData($('#ajaxForm')[0]),#}
+{#        url: "{% url 'admin-urls:profile_save' %}",#}
+{#        success: function (res) {#}
+{#            alert(res.msg);#}
+{#            swal({#}
+{#            title: '保存成功',#}
+{#            type: 'success',#}
+{#            confirmButtonColor: '#53aeff',#}
+{#            confirmButtonText: '确定',#}
+{#            closeOnConfirm: false#}
+{#                    }, function () {#}
+{#            setTimeout(function () {#}
+{#                    window.location.href = '{% url 'admin-urls:profile' %}';#}
+{#                }, 1000);#}
+{#        });#}
+{#        }#}
+{#    });#}
+{#    });#}
+
+
+
+
+
+
+
+{#    $("#ajaxForm").ajaxFormDialog(function(){#}
+{#        swal({#}
+{#            title: '保存成功',#}
+{#            type: 'success',#}
+{#            confirmButtonColor: '#53aeff',#}
+{#            confirmButtonText: '确定',#}
+{#            closeOnConfirm: false#}
+{#                    }, function () {#}
+{#            setTimeout(function () {#}
+{#                    window.location.href = '{% url 'admin-urls:profile' %}';#}
+{#                }, 1000);#}
+{#        });}, null, null);#}
+</script>
+{% endblock %}

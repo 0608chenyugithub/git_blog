@@ -17,8 +17,8 @@
 {% block right-content %}
         <div class="col-md-10 right-content" style="text-align:left;">
 			<form id="ajaxForm" class="form form-horizontal" id="demoform-1"
-                    {% if python_subtitle %}action="/admin/api/pythonsubtitle/{{ python_subtitle.id }}/" method="patch"
-                    {% else %}action="/admin/api/pythonsubtitle/" method="post"
+                    {% if python_subtitle %}action="{% url 'admin-urls:admin-api:python_subtitle-detail'  python_subtitle.id %}" method="patch"
+                    {% else %}action="{% url 'admin-urls:admin-api:python_subtitle-list' %}" method="post"
                     {% endif %}>
                     {% csrf_token %}
                     {% if python_subtitle %}
@@ -56,7 +56,7 @@
 					<div class="row cl">
 						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
 							<input class="btn btn-primary radius" type="submit" value="保存">
-                            <a href="/admin/python/" class="btn btn-success radius">取消</a>
+                            <a href="{% url 'admin-urls:python' %}" class="btn btn-success radius">取消</a>
 						</div>
 					</div>
 			</form>
@@ -80,7 +80,7 @@
             closeOnConfirm: false
                     }, function () {
             setTimeout(function () {
-                    window.location.href = '/admin/python/';
+                    window.location.href = '{% url 'admin-urls:python' %}';
                 }, 1000);
         });}, null, null);
 </script>
